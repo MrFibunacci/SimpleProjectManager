@@ -3,20 +3,21 @@
 
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header">{{ __('Dashboard') }}</div>
-
-                    <div class="card-body">
-                        @if (session('status'))
-                            <div class="alert alert-success" role="alert">
-                                {{ session('status') }}
-                            </div>
-                        @endif
-
-                        {{ __('You are logged in!') }}
-                    </div>
-                </div>
+            <div class="col-md-auto">
+                <x-card>
+                    <x-card.header>Projects</x-card.header>
+                    <x-card.body>
+                        here goes a list of your active projects
+                    </x-card.body>
+                </x-card>
+            </div>
+            <div class="col-md-auto">
+                <x-card>
+                    <x-card.header>Tasks</x-card.header>
+                    <x-card.body>
+                        here goes a list of your active tasks, sorted by due date, importance, status and other sensefull crap
+                    </x-card.body>
+                </x-card>
             </div>
         </div>
     </div>

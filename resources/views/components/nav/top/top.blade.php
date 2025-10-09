@@ -10,7 +10,10 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <!-- Left Side Of Navbar -->
             <ul class="navbar-nav me-auto">
-
+                @auth
+                    <x-nav.top.item route="projects">{{ __('projects') }}</x-nav.top.item>
+                    <x-nav.top.item route="tasks">{{ __('tasks') }}</x-nav.top.item>
+                @endauth
             </ul>
 
             <!-- Right Side Of Navbar -->
