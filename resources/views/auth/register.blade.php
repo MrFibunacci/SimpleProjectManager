@@ -23,7 +23,7 @@
                                 {{ __('Password') }}
                             </x-form.input>
 
-                            <x-form.input name="password-confirm" type="password" required>
+                            <x-form.input name="password_confirmation" type="password" required>
                                 {{ __('Confirm Password') }}
                             </x-form.input>
 
