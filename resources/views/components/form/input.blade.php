@@ -3,9 +3,13 @@
 
     <div class="col-md-6">
         <input id="{{ $name }}"
-               type=@if(!isset($type) && ($name == 'email' || 'search' || 'number' || 'date')) "{{ $name }}" @else "{{ $type }}" @endif
-               class="form-control @error($name) is-invalid @enderror"name="{{ $name }}"
-               value="{{ old($name) }}" @if(isset($required)) required @endif autocomplete="{{ $name }}" @if(isset($autofocus)) autofocus @endif {{ $attributes }}>
+            type=@if(!isset($type) && ($name == 'email' || 'search' || 'number' || 'date')) "{{ $name }}" @else "{{ $type }}" @endif
+            class="form-control @error($name) is-invalid @enderror"name="{{ $name }}"
+            value="{{ old($name) }}"
+            @if(isset($required)) required @endif
+            autocomplete="@if(isset($autocomplete)) {{$autocomplete}} @else {{ $name }} @endif"
+            @if(isset($autofocus)) autofocus @endif {{ $attributes }}
+        >
 
         @error($name)
         <span class="invalid-feedback" role="alert">
