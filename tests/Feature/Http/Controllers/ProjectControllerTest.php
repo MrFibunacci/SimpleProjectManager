@@ -8,13 +8,17 @@ use Tests\TestCase;
 
 class ProjectControllerTest extends TestCase
 {
-    /**
-     * A basic feature test example.
-     */
-    public function test_example(): void
+    public function test_index_page_can_be_viewed()
     {
-        $response = $this->get('/');
-
+        $response = $this->get(route('projects'));
         $response->assertStatus(200);
+        $response->assertViewIs('project.index');
+    }
+
+    public function test_create_page_can_be_viewed()
+    {
+        $response = $this->get(route('projects.create'));
+        $response->assertStatus(200);
+        $response->assertViewIs('project.create');
     }
 }
