@@ -13,14 +13,4 @@ class ProjectUser extends Pivot
     {
         return $this->belongsTo(Role::class);
     }
-
-    public function project(): BelongsTo
-    {
-        return $this->belongsTo(Project::class);
-    }
-
-    public function user(): BelongsTo
-    {
-        return $this->belongsTo(User::class);
-    }
 }
