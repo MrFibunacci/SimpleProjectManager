@@ -13,10 +13,10 @@ class ProjectController extends Controller
     {
         $project = new Project($request->validated());
         $project->save();
-        $role = (new Role())::find(1);
 
-        Auth::user()->projects()->save($project);
+        $role = Role::where('name', 'Owner')->first();
+        Auth::user()->projects()->attach($project, ['role_id' => $role->id]);
 
-        //TODO add the owner role to pivot table between project and user
+        return redirect()->route('projects');
     }
 }
