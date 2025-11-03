@@ -6,7 +6,7 @@ use App\Http\Requests\StoreStatusRequest;
 use App\Http\Requests\UpdateStatusRequest;
 use App\Models\Status;
 use Illuminate\Contracts\View\Factory;
-use \Illuminate\Contracts\View\View;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Redirector;
 
@@ -56,17 +56,20 @@ class StatusController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Status $status)
+    public function edit(Status $status): Factory|View
     {
-        //
+        return view('status.edit', ['status' => $status]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateStatusRequest $request, Status $status)
+    public function update(UpdateStatusRequest $request, Status $status): Redirector|RedirectResponse
     {
-        //
+        $status->name = $request->validated('name');
+        $status->save();
+
+        return redirect(route('status'));
     }
 
     /**

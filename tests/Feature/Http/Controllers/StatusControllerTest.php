@@ -44,6 +44,27 @@ class StatusControllerTest extends TestCase
         $this->assertDatabaseHas('statuses', ['name' => 'Test Status']);
     }
 
+    public function test_update_page_can_be_viewed()
+    {
+        $this->actingAs(User::factory()->create());
+        $status = Status::factory()->create();
+
+        $response = $this->get(route('status.edit', $status));
+        $response->assertOk();
+        $response->assertViewIs('status.edit');
+        $response->assertViewHas('status', $status);
+    }
+    public function test_status_can_be_updated()
+    {
+        $this->actingAs(User::factory()->create());
+        $status = Status::factory()->create();
+
+        $response = $this->patch(route('status.update', $status), ['name' => 'Updated Status']);
+
+        $response->assertRedirect(route('status'));
+        $this->assertDatabaseHas('statuses', ['name' => 'Updated Status']);
+    }
+
     public function test_status_can_be_deleted()
     {
         $this->actingAs(User::factory()->create());

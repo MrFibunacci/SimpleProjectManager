@@ -21,4 +21,5 @@ Route::get('/status', [StatusController::class, 'index'])->name('status');
 Route::get('/status/create', [StatusController::class, 'create'])->name('status.create');
 Route::post('/status/store', [StatusController::class, 'store'])->name('status.store');
 Route::get('/status/{status}/edit', [StatusController::class, 'edit'])->name('status.edit');
+Route::patch('/status/{status}/update', [StatusController::class, 'update'])->name('status.update');
 Route::delete('/status/destroy/{status}', [StatusController::class, 'destroy'])->name('status.destroy');

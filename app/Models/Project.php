@@ -7,6 +7,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
+/**
+ * @property mixed $description
+ * @property mixed $name
+ * @property mixed $due_date
+ * @method static where(string $string, string $string1)
+ */
 class Project extends Model
 {
     /** @use HasFactory<ProjectFactory> */
