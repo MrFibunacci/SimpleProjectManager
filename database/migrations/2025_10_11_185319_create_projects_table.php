@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Status;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -16,6 +17,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('description');
             $table->date('due_date');
+            $table->foreignIdFor(Status::class);
             $table->timestamps();
         });
     }

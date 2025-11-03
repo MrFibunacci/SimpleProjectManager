@@ -24,6 +24,13 @@
                                 Due date
                             </x-form.input>
 
+                            <x-form.select name="status" label="Status">
+                                @foreach(\App\Models\Status::all() as $status)
+                                    <option value="{{ $status->id }}">{{ $status->name }}</option>
+                                @endforeach
+                            </x-form.select>
+
+
                             <x-form.submit>
                                 Submit
                             </x-form.submit>

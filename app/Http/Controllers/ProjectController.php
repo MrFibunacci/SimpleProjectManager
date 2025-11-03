@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreProjectRequest;
 use App\Models\Project;
 use App\Models\Role;
+use App\Models\Status;
 use Illuminate\Support\Facades\Auth;
 
 class ProjectController extends Controller
@@ -12,6 +13,7 @@ class ProjectController extends Controller
     public function store(StoreProjectRequest $request)
     {
         $project = new Project($request->validated());
+        $project->status()->associate(Status::find($request->validated('status')));
         $project->save();
 
         $role = Role::where('name', 'Owner')->first();

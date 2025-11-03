@@ -5,12 +5,15 @@ namespace App\Models;
 use Database\Factories\ProjectFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
  * @property mixed $description
  * @property mixed $name
  * @property mixed $due_date
+ * @property mixed $status_id
  * @method static where(string $string, string $string1)
  */
 class Project extends Model
@@ -29,5 +32,10 @@ class Project extends Model
         return $this->belongsToMany(User::class)
             ->using(ProjectUser::class)
             ->withPivot(['role_id']);
+    }
+
+    public function status(): BelongsTo
+    {
+        return $this->belongsTo(Status::class);
     }
 }

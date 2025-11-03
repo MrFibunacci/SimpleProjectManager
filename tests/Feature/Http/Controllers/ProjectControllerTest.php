@@ -4,6 +4,7 @@ namespace Tests\Feature\Http\Controllers;
 
 use App\Models\Project;
 use App\Models\Role;
+use App\Models\Status;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -38,11 +39,13 @@ class ProjectControllerTest extends TestCase
             'due_date' => now()->addDays(30)->format('Y-m-d'),
         ]);
 
-        $response = $this->post(route('projects.store'), [
+        $testProject->status()->associate(Status::factory()->create());
+
         $response = $this->post(route('project.store'), [
             'name' => $testProject->name,
             'description' => $testProject->description,
             'due_date' => $testProject->due_date,
+            'status' => $testProject->status_id,
         ]);
 
         $response->assertRedirect(route('projects'));
@@ -50,6 +53,7 @@ class ProjectControllerTest extends TestCase
             'name' => $testProject->name,
             'description' => $testProject->description,
             'due_date' => $testProject->due_date,
+            'status_id' => $testProject->status_id,
         ]);
 
         $project = Project::where('name', 'Test Project')->where('description', 'Test Description')->first();

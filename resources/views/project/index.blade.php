@@ -25,9 +25,9 @@
                                 <tr>
                                     <th scope="row">{{ $project->name }}</th>
                                     <td></td>
-                                    <td>{{ $project->dueDate }}</td>
+                                    <td>{{ $project->due_date }}</td>
                                     <td>4/10</td>
-                                    <td></td>
+                                    <td>{{ $project->status()->first()->name }}</td>
                                 </tr>
                             @endforeach
                         </tbody>

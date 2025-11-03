@@ -27,6 +27,7 @@ class StoreProjectRequest extends FormRequest
             'name' => 'required|string',
             'description' => 'string|max:255',
             'due_date' => 'date|date_format:Y-m-d|after_or_equal:today',
+            'status' => 'required|integer|exists:statuses,id',
         ];
     }
 }
