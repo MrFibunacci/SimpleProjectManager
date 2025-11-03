@@ -21,7 +21,7 @@ class ProjectControllerTest extends TestCase
 
     public function test_create_page_can_be_viewed()
     {
-        $response = $this->get(route('projects.create'));
+        $response = $this->get(route('project.create'));
         $response->assertStatus(200);
         $response->assertViewIs('project.create');
     }
@@ -39,6 +39,7 @@ class ProjectControllerTest extends TestCase
         ]);
 
         $response = $this->post(route('projects.store'), [
+        $response = $this->post(route('project.store'), [
             'name' => $testProject->name,
             'description' => $testProject->description,
             'due_date' => $testProject->due_date,

@@ -9,7 +9,7 @@
                     <x-card.header>Create Project</x-card.header>
 
                     <x-card.body>
-                        <form method="POST" action="{{ route('projects.store') }}">
+                        <form method="POST" action="{{ route('project.store') }}">
                             @csrf
 
                             <x-form.input name="name" required autofocus>

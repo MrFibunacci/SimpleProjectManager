@@ -12,8 +12,8 @@ Auth::routes();
 
 Route::view('/dashboard', 'dashboard')->middleware('auth')->name('dashboard');
 Route::view('/projects', 'project.index')->middleware('auth')->name('projects');
-Route::view('/project/create', 'project.create')->middleware('auth')->name('projects.create');
-Route::post('/project/store', [ProjectController::class, 'store'])->name('projects.store');
+Route::view('/project/create', 'project.create')->middleware('auth')->name('project.create');
+Route::post('/project/store', [ProjectController::class, 'store'])->name('project.store');
 Route::get('/tasks')->name('tasks');
 Route::get('/settings')->name('settings');
 

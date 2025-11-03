@@ -2,6 +2,11 @@
     <x-slot:title>Projects</x-slot:title>
 
     <div class="container">
+        <div class="row">
+            <div class="col-md-auto">
+                <a type="button" class="btn btn-primary" href="{{ route('project.create') }}">New</a>
+            </div>
+        </div>
         <div class="row justify-content-center">
             <div class="col-md-auto">
                 <div class="table-responsive">
