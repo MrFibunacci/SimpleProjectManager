@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Enum\Project;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -23,7 +24,10 @@ class UpdateProjectRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => Project::NAME->validationRules(),
+            'description' => Project::DESCRIPTION->validationRules(),
+            'due_date' => Project::DUE_DATE->validationRules(),
+            'status' => Project::STATUS_ID->validationRules()
         ];
     }
 }

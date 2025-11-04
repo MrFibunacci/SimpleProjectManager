@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Enum\Project;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
@@ -24,10 +25,10 @@ class StoreProjectRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string',
-            'description' => 'string|max:255',
-            'due_date' => 'date|date_format:Y-m-d|after_or_equal:today',
-            'status' => 'required|integer|exists:statuses,id',
+            'name' => Project::NAME->validationRules(),
+            'description' => Project::DESCRIPTION->validationRules(),
+            'due_date' => Project::DUE_DATE->validationRules(),
+            'status' => Project::STATUS_ID->validationRules(),
         ];
     }
 }
