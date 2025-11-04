@@ -2,11 +2,7 @@
     <x-slot:title>Statuses Overview</x-slot:title>
 
     <div class="container">
-        <div class="row">
-            <div class="col-md-auto">
-                <a type="button" class="btn btn-primary" href="{{ route('status.create') }}">New</a>
-            </div>
-        </div>
+        <x-newButton route="status.create" />
         <div class="row justify-content-center">
             <div class="col-auto">
                 <div class="table-responsive">

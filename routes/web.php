@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\StatusController;
+use App\Http\Controllers\TaskController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -14,7 +15,11 @@ Route::view('/dashboard', 'dashboard')->middleware('auth')->name('dashboard');
 Route::view('/projects', 'project.index')->middleware('auth')->name('projects');
 Route::view('/project/create', 'project.create')->middleware('auth')->name('project.create');
 Route::post('/project/store', [ProjectController::class, 'store'])->name('project.store');
-Route::get('/tasks')->name('tasks');
+
+Route::get('/tasks', [TaskController::class, 'index'])->name('tasks');
+Route::get('/tasks/create', [TaskController::class, 'create'])->name('task.create');
+Route::post('/tasks/store', [TaskController::class, 'store'])->name('task.store');
+
 Route::get('/settings')->name('settings');
 
 Route::get('/status', [StatusController::class, 'index'])->name('status');
