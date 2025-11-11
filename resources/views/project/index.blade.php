@@ -23,7 +23,7 @@
                         <tbody>
                             @foreach(Auth::user()->projects()->get() as $project)
                                 <tr>
-                                    <th scope="row">{{ $project->name }}</th>
+                                    <th scope="row"><a href="{{ route('project.show', $project) }}">{{ $project->name }}</a></th>
                                     <td></td>
                                     <td>{{ $project->due_date }}</td>
                                     <td>4/10</td>

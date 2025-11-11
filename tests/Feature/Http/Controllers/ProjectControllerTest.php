@@ -7,6 +7,7 @@ use App\Models\Role;
 use App\Models\Status;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Auth;
 use Tests\TestCase;
 
 class ProjectControllerTest extends TestCase
@@ -64,5 +65,17 @@ class ProjectControllerTest extends TestCase
             'project_id' => $project->id,
             'role_id' => Role::where('name', 'Owner')->first()->id,
         ]);
+    }
+
+    public function test_project_can_be_viewed()
+    {
+        $user = User::factory()->create();
+        $this->actingAs($user);
+        $project = Project::factory()->create();
+        $user->projects()->attach($project, ['role_id' => Role::factory()->create()->id]);
+
+        $response = $this->get(route('project.show', ['project' => $project]));
+        $response->assertStatus(200);
+        $response->assertViewIs('project.show');
     }
 }

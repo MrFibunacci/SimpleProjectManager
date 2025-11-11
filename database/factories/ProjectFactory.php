@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Project;
+use App\Models\Status;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -21,6 +22,7 @@ class ProjectFactory extends Factory
             'name' => $this->faker->name(),
             'description' => $this->faker->realText(),
             'due_date' => $this->faker->date(),
+            'status_id' => Status::factory(),
         ];
     }
 }
