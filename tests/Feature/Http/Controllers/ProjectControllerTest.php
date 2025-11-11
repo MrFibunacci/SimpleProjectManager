@@ -15,6 +15,7 @@ class ProjectControllerTest extends TestCase
 
     public function test_index_page_can_be_viewed()
     {
+        $this->actingAs(User::factory()->create());
         $response = $this->get(route('projects'));
         $response->assertStatus(200);
         $response->assertViewIs('project.index');
@@ -22,6 +23,7 @@ class ProjectControllerTest extends TestCase
 
     public function test_create_page_can_be_viewed()
     {
+        $this->actingAs(User::factory()->create());
         $response = $this->get(route('project.create'));
         $response->assertStatus(200);
         $response->assertViewIs('project.create');
