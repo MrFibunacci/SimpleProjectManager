@@ -34,4 +34,9 @@ class ProjectController extends Controller
     {
         return view('project.show', ['project' => $project]);
     }
+
+    public function tasks(Project $project): View
+    {
+        return view('project.tasks', ['project' => $project]);
+    }
 }

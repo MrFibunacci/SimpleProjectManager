@@ -16,6 +16,7 @@ Route::view('/projects', 'project.index')->middleware('auth')->name('projects');
 Route::view('/project/create', 'project.create')->middleware('auth')->name('project.create');
 Route::post('/project/store', [ProjectController::class, 'store'])->name('project.store');
 Route::get('/project/{project}', [ProjectController::class, 'show'])->name('project.show');
+Route::get('/project/{project}/tasks', [ProjectController::class, 'tasks'])->name('project.tasks');
 
 Route::get('/tasks', [TaskController::class, 'index'])->name('tasks');
 Route::get('/tasks/create', [TaskController::class, 'create'])->name('task.create');
