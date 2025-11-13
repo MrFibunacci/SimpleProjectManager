@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateTaskRequest;
 use App\Models\Task;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Auth;
 
 class TaskController extends Controller
 {
@@ -21,9 +22,15 @@ class TaskController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(): Factory|View
+    public function create(\Illuminate\Http\Request $request): View
     {
-        return view('task.create');
+        if ($request->get('project') !== null) {
+            $projects = Auth::user()->projects()->where('id', $request->get('project'))->get();
+        } else {
+            $projects = Auth::user()->projects;
+        }
+
+        return view('task.create', ['projects' => $projects]);
     }
 
     /**
