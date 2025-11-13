@@ -9,12 +9,14 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Support\Collection;
 
 /**
  * @property mixed $description
  * @property mixed $name
  * @property mixed $due_date
  * @property mixed $status_id
+ * @property Collection<Task> $tasks
  * @method static where(string $string, string $string1)
  */
 class Project extends Model

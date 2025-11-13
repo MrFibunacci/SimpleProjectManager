@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use App\Enum\Task;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class StoreTaskRequest extends FormRequest
 {
@@ -13,7 +14,8 @@ class StoreTaskRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+//        return Auth::user()->can('create', Task::class);
+        return true;
     }
 
     /**

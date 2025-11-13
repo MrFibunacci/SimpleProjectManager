@@ -38,7 +38,8 @@ class TaskController extends Controller
      */
     public function store(StoreTaskRequest $request)
     {
-        //
+        $user = Auth::user();
+        dd($user->can('create', [$user, Task::class]));
     }
 
     /**

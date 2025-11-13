@@ -2,20 +2,11 @@
     <x-slot:title>Project: {{ $project->name }} - Tasks</x-slot:title>
 
     <div class="container">
-        <div class="row">
-            <div class="col-auto">
-                <h1>{{ $project->name }}</h1>
-            </div>
-        </div>
-        <div class="row">
+        <x-projectHeader :project="$project">
             <div class="col">
-                <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-                    <a type="button" class="btn btn-primary" href="{{ route('project.tasks', $project) }}">tasks</a>
-                    <a type="button" class="btn btn-primary disabled">docs</a>
-                    <a type="button" class="btn btn-primary disabled">settings</a>
-                </div>
+                <x-newButton route="task.create" :routeParameters="['project'=>$project]" label="New Task"/>
             </div>
-        </div>
+        </x-projectHeader>
 
         <div class="row justify-content-center">
             <div class="col-md-12">
@@ -25,6 +16,7 @@
                             <th>id</th>
                             <th>Title</th>
                             <th>Due date</th>
+                            <th>Status</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -33,6 +25,7 @@
                                 <td>{{ $task->id }}</td>
                                 <td>{{ $task->title }}</td>
                                 <td>{{ $task->due_date }}</td>
+                                <td>{{ $task->status }}</td>
                             </tr>
                         @endforeach
                     </tbody>
