@@ -38,8 +38,15 @@ class TaskController extends Controller
      */
     public function store(StoreTaskRequest $request)
     {
-        $user = Auth::user();
-        dd($user->can('create', [$user, Task::class]));
+        $task = new Task($request->validated());
+
+        if (Auth::user()->cannot('create', [$task])) {
+            abort(403);
+        }
+
+        $task->save();
+
+        return to_route('project.tasks', $task->project)->with('success', 'Task created successfully');
     }
 
     /**

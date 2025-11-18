@@ -14,7 +14,7 @@
                             <x-form.textarea name="{{ \App\Enum\Task::DESCRIPTION }}">Description</x-form.textarea>
                             <x-form.input name="{{ \App\Enum\Task::DUE_DATE }}" type="date">Due Date</x-form.input>
 
-                            <x-form.select name="project" label="Project">
+                            <x-form.select name="{{ \App\Enum\Task::PROJECT_ID }}" label="Project">
                                 @foreach($projects as $project)
                                     <option value="{{ $project->id }}">{{ $project->name }}</option>
                                 @endforeach

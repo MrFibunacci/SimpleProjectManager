@@ -30,6 +30,7 @@ class StoreTaskRequest extends FormRequest
             'description' => Task::DESCRIPTION->validationRules(),
             'due_date' => Task::DUE_DATE->validationRules(),
             'completed' => Task::COMPLETED->validationRules(),
+            'project_id' => Task::PROJECT_ID->validationRules(),
         ];
     }
 }

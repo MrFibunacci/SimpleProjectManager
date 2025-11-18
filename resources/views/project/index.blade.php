@@ -26,7 +26,7 @@
                                     <th scope="row"><a href="{{ route('project.show', $project) }}">{{ $project->name }}</a></th>
                                     <td></td>
                                     <td>{{ $project->due_date }}</td>
-                                    <td>4/10</td>
+                                    <td>{{ $project->tasks()->where('completed', null)->count() }}/{{ $project->tasks()->count() }}</td>
                                     <td>{{ $project->status()->first()->name }}</td>
                                 </tr>
                             @endforeach

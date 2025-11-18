@@ -13,10 +13,10 @@ enum Task: string
     public function validationRules(): array
     {
         return match ($this) {
-            self::TITLE => [],
-            self::DUE_DATE => [],
-            self::DESCRIPTION => [],
-            self::COMPLETED => [],
+            self::TITLE => ['required', 'string', 'max:64', 'min:3'],
+            self::DUE_DATE, self::COMPLETED => ['nullable', 'date', 'date_format:Y-m-d', 'after_or_equal:today'],
+            self::DESCRIPTION => ['nullable', 'string', 'max:255'],
+            self::PROJECT_ID => ['required', 'integer', 'exists:projects,id'],
         };
     }
 }
