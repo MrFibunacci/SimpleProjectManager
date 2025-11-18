@@ -21,6 +21,7 @@ Route::get('/project/{project}/tasks', [ProjectController::class, 'tasks'])->nam
 Route::get('/tasks', [TaskController::class, 'index'])->name('tasks');
 Route::get('/tasks/create', [TaskController::class, 'create'])->name('task.create');
 Route::post('/tasks/store', [TaskController::class, 'store'])->name('task.store');
+Route::get('/tasks/{task}', [TaskController::class, 'show'])->name('task.show');
 
 Route::get('/settings')->name('settings');
 
