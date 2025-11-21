@@ -15,6 +15,6 @@ class TaskTest extends ModelTestCase
      */
     public function test_model_configuration(): void
     {
-        $this->runConfigurationAssertions(new Task(), ['title', 'due_date', 'completed', 'description']);
+        $this->runConfigurationAssertions(new Task(), ['title', 'due_date', 'completed', 'description', 'project_id']);
     }
 }

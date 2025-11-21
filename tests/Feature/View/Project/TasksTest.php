@@ -2,7 +2,8 @@
 
 namespace Tests\Feature\View\Project;
 
-use Feature\View\Project\ViewTest;
+use App\Models\Task;
+use Tests\Feature\View\ViewTest;
 
 class TasksTest extends ViewTest
 {
@@ -10,11 +11,13 @@ class TasksTest extends ViewTest
     {
         parent::setUp();
 
-        $this->setUpTestView('project.task', ['project' => $this->testProject]);
+        $this->testProject->tasks()->save(Task::factory()->make());
+
+        $this->setUpTestView('project.tasks', ['project' => $this->testProject, 'tasks' => $this->testProject->tasks]);
     }
 
     public function test_title_is_correct(): void
     {
-        $this->runTitleAssertion("SimpleProjectManager - Project: ".$this->testProject->name." Tasks");
+        $this->runTitleAssertion("SimpleProjectManager - Project: ".$this->testProject->name." - Tasks");
     }
 }
