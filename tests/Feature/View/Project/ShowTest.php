@@ -2,7 +2,8 @@
 
 namespace Tests\Feature\View\Project;
 
-use Feature\View\Project\ViewTest;
+use App\Models\Task;
+use Tests\Feature\View\ViewTest;
 
 class ShowTest extends ViewTest
 {
