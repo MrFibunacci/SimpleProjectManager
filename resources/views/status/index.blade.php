@@ -19,7 +19,7 @@
                                     <td>{{ $status->name }}</td>
                                     <td>
                                         <a href="{{ route('status.destroy', $status) }}"><i class="bi bi-trash-fill"></i></a>
-                                        <a href="{{ route('status.edit', $status) }}"><i class="bi bi-pencil-square"></i></a>
+                                        <x-actionLink.edit route="status" :param="$status"/>
                                     </td>
                                 </tr>
                             @endforeach
