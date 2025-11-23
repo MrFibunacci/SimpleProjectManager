@@ -4,7 +4,7 @@
     <div class="container">
         <div class="row">
             <div class="col-auto">
-                <h1><a href="{{ route('project.tasks', $task->project) }}">{{ $task->project->name }}</a> Task -> {{ $task->title }}</h1>
+                <h1><a href="{{ route('project.tasks', $task->project) }}">{{ $task->project->name }}</a> Task -> {{ $task->title }} <x-actionLink.edit route="task" :param="$task"/> </h1>
             </div>
         </div>
         <div class="row">

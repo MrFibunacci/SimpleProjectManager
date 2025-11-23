@@ -60,9 +60,9 @@ class TaskController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Task $task): Factory|View
+    public function edit(Task $task): View
     {
-        return view('task.edit', ['task' => $task]);
+        return view('task.edit', ['task' => $task, 'projects' => $task->project()->get()]);
     }
 
     /**

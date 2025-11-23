@@ -20,4 +20,28 @@ class TasksTest extends ViewTest
     {
         $this->runTitleAssertion("SimpleProjectManager - Project: ".$this->testProject->name." - Tasks");
     }
+
+    public function test_table_head_is_correct(): void
+    {
+        $this->testView->assertSeeInOrder([
+            'id',
+            'Title',
+            'Due date',
+            'Status',
+            'Actions',
+        ]);
+    }
+
+    public function test_table_body_is_correct(): void
+    {
+        $task = $this->testProject->tasks()->first();
+
+        $this->testView->assertSeeInOrder([
+            $task->id,
+            $task->title,
+            $task->due_date,
+            //$task->status,
+            'href', route('task.edit', $task), 'class="bi bi-pencil-square"'
+        ]);
+    }
 }
