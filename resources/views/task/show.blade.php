@@ -25,6 +25,9 @@
                     <dt class="col-sm-3">Parent task:</dt>
                     <dd class="col-sm-9">{{ $task->parent_task_id }}</dd>
 
+                    <dt class="col-sm-3">Status:</dt>
+                    <dd class="col-sm-9">{{ $task->status->name }}</dd>
+
                     <dt class="col-sm-3">Description:</dt>
                     <dd class="col-sm-9">{!! nl2br($task->description) !!}</dd>
                 </dl>

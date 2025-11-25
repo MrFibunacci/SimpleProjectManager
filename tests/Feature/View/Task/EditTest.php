@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\View\Task;
 
+use App\Models\Status;
 use App\Models\Task;
 use Tests\TestCase;
 
@@ -16,6 +17,8 @@ class EditTest extends TestCase
 
         $contents = $this->view('task.edit', [
             'task' => $task,
+            'projects' => $task->project()->get(),
+            'statuses' => Status::all()
         ]);
 
         $contents->assertViewHas('task', $task)

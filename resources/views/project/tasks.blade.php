@@ -26,7 +26,7 @@
                                 <td>{{ $task->id }}</td>
                                 <td><a href="{{route('task.show', $task)}}">{{ $task->title }}</a></td>
                                 <td>{{ $task->due_date }}</td>
-                                <td>{{ $task->status }}</td>
+                                <td>{{ $task->status->name }}</td>
                                 <td>
                                     <x-actionLink.edit route="task" :param="$task"/>
                                 </td>

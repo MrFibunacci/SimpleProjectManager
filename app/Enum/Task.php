@@ -9,6 +9,7 @@ enum Task: string
     CASE DUE_DATE = 'due_date';
     CASE DESCRIPTION = 'description';
     CASE COMPLETED = 'completed';
+    case STATUS_ID = 'status_id';
 
     public function validationRules(): array
     {
@@ -17,6 +18,7 @@ enum Task: string
             self::DUE_DATE, self::COMPLETED => ['nullable', 'date', 'date_format:Y-m-d', 'after_or_equal:today'],
             self::DESCRIPTION => ['nullable', 'string', 'max:255'],
             self::PROJECT_ID => ['required', 'integer', 'exists:projects,id'],
+            self::STATUS_ID => ['required', 'integer', 'exists:statuses,id'],
         };
     }
 }

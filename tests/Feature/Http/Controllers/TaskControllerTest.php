@@ -4,6 +4,7 @@ namespace Tests\Feature\Http\Controllers;
 
 use App\Models\Project;
 use App\Models\Role;
+use App\Models\Status;
 use App\Models\Task;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -41,6 +42,7 @@ class TaskControllerTest extends TestCase
             'title' => 'test',
             'description' => 'test_description',
             'project_id' => $project->id,
+            'status_id' => Status::factory()->create()->id,
             'due_date' => now()->format('Y-m-d'),
         ];
 
@@ -88,6 +90,7 @@ class TaskControllerTest extends TestCase
             'task' => $task,
             'title' => $task->title,
             'description' => $task->description,
+            'status_id' => $task->status_id,
         ]));
         $response->assertRedirect(route('task.show', ['task' => $task]));
 

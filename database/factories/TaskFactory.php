@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Project;
+use App\Models\Status;
 use App\Models\Task;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -24,6 +25,7 @@ class TaskFactory extends Factory
             'due_date' => $this->faker->date(),
             'completed' => rand(0, 1) ? null : $this->faker->date(),
             'project_id' => Project::factory(),
+            'status_id' => Status::factory(),
         ];
     }
 }

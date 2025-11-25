@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Enum\Task as TaskEnum;
 use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
+use App\Models\Status;
 use App\Models\Task;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class TaskController extends Controller
@@ -22,7 +25,7 @@ class TaskController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(\Illuminate\Http\Request $request): View
+    public function create(Request $request): View
     {
         if ($request->get('project') !== null) {
             $projects = Auth::user()->projects()->where('id', $request->get('project'))->get();
@@ -30,7 +33,7 @@ class TaskController extends Controller
             $projects = Auth::user()->projects;
         }
 
-        return view('task.create', ['projects' => $projects]);
+        return view('task.create', ['projects' => $projects, 'statuses' => Status::all()]);
     }
 
     /**
@@ -43,6 +46,7 @@ class TaskController extends Controller
         if (Auth::user()->cannot('create', [$task])) {
             abort(403);
         }
+        $task->status()->associate(Status::find($request->validated('status_id')));
 
         $task->save();
 
@@ -62,7 +66,7 @@ class TaskController extends Controller
      */
     public function edit(Task $task): View
     {
-        return view('task.edit', ['task' => $task, 'projects' => $task->project()->get()]);
+        return view('task.edit', ['task' => $task, 'projects' => $task->project()->get(), 'statuses' => Status::all()]);
     }
 
     /**
@@ -73,6 +77,8 @@ class TaskController extends Controller
         if (Auth::user()->cannot('update', [$task])) {
             abort(403);
         }
+
+        $task->status()->associate(Status::find($request->validated('status_id')));
 
         $task->update($request->validated());
 

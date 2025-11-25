@@ -29,6 +29,7 @@ class UpdateTaskRequest extends FormRequest
             'description' => Task::DESCRIPTION->validationRules(),
             'due_date' => Task::DUE_DATE->validationRules(),
             'completed' => Task::COMPLETED->validationRules(),
+            'status_id' => Task::STATUS_ID->validationRules(),
         ];
     }
 }

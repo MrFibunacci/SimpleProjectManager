@@ -20,6 +20,12 @@
                                 @endforeach
                             </x-form.select>
 
+                            <x-form.select name="{{ \App\Enum\Task::STATUS_ID }}" label="Status">
+                                @foreach($statuses as $status)
+                                    <option value="{{ $status->id }}" @if($status->id == $task->status->id)selected @endif>{{ $status->name }}</option>
+                                @endforeach
+                            </x-form.select>
+
                             <x-form.submit>Submit</x-form.submit>
                         </form>
                     </x-card.body>

@@ -10,6 +10,8 @@
                         <form action="{{ route('task.store') }}" method="post">
                             @csrf
 
+                            @dump($errors)
+
                             <x-form.input name="{{ \App\Enum\Task::TITLE }}">Title</x-form.input>
                             <x-form.textarea name="{{ \App\Enum\Task::DESCRIPTION }}">Description</x-form.textarea>
                             <x-form.input name="{{ \App\Enum\Task::DUE_DATE }}" type="date">Due Date</x-form.input>
@@ -17,6 +19,12 @@
                             <x-form.select name="{{ \App\Enum\Task::PROJECT_ID }}" label="Project">
                                 @foreach($projects as $project)
                                     <option value="{{ $project->id }}">{{ $project->name }}</option>
+                                @endforeach
+                            </x-form.select>
+
+                            <x-form.select name="{{ \App\Enum\Task::STATUS_ID }}" label="Status">
+                                @foreach($statuses as $status)
+                                    <option value="{{ $status->id }}">{{ $status->name }}</option>
                                 @endforeach
                             </x-form.select>
 
