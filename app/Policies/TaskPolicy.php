@@ -38,7 +38,7 @@ class TaskPolicy
      */
     public function update(User $user, Task $task): bool
     {
-        return false;
+        return Auth::user() === $user && $user->projects->contains($task->project_id);
     }
 
     /**

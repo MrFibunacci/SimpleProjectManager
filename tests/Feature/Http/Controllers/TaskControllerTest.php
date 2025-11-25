@@ -71,4 +71,30 @@ class TaskControllerTest extends TestCase
             ->assertViewIs('task.edit')
             ->assertViewHas('task', $task);
     }
+
+    public function test_task_can_be_updated()
+    {
+        $user = User::factory()->create();
+        $task = Task::factory()->create();
+
+        $user->projects()->attach($task->project, ['role_id'=>Role::factory()->create()->id]);
+
+        $this->actingAs($user);
+
+        $task->title = 'updated title';
+        $task->description = 'updated description';
+
+        $response = $this->post(route('task.update', [
+            'task' => $task,
+            'title' => $task->title,
+            'description' => $task->description,
+        ]));
+        $response->assertRedirect(route('task.show', ['task' => $task]));
+
+        $this->assertDatabaseHas('tasks', [
+            'id' => $task->id,
+            'title' => $task->title,
+            'description' => $task->description,
+        ]);
+    }
 }

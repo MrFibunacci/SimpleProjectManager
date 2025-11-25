@@ -6,6 +6,7 @@ use Database\Factories\TaskFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Carbon;
 
 class Task extends Model
 {
@@ -15,6 +16,11 @@ class Task extends Model
     protected $fillable = [
         'title', 'due_date', 'completed', 'description', 'project_id'
     ];
+
+    public function due_date_for_form(): string
+    {
+        return (new Carbon($this->due_date))->format('Y-m-d');
+    }
 
     public function project(): BelongsTo
     {

@@ -70,7 +70,13 @@ class TaskController extends Controller
      */
     public function update(UpdateTaskRequest $request, Task $task)
     {
-        //
+        if (Auth::user()->cannot('update', [$task])) {
+            abort(403);
+        }
+
+        $task->update($request->validated());
+
+        return to_route('task.show', $task)->with('success', 'Task updated successfully');
     }
 
     /**
