@@ -23,7 +23,32 @@
                     <dd class="col-sm-9">{{ $task->completed }}</dd>
 
                     <dt class="col-sm-3">Parent task:</dt>
-                    <dd class="col-sm-9">{{ $task->parent_task_id }}</dd>
+                    <dd class="col-sm-9">
+                        @if(isset($task->parent_task))
+                            <div class="list-group">
+                                <a href="{{ route('task.show', $task->parent_task) }}"
+                                   class="list-group-item list-group-item-action">
+                                    {{ $task->parent_task->title }}
+                                    <span class="badge bg-secondary">{{ $task->parent_task->status->name }}</span>
+                                </a>
+                            </div>
+                        @endif
+                    </dd>
+
+                    <dt class="col-sm-3">Child tasks:</dt>
+                    <dd class="col-sm-9">
+                        @if(isset($task->child_tasks))
+                            <div class="list-group">
+                                @foreach($task->child_tasks as $child_task)
+                                    <a href="{{ route('task.show', $child_task) }}"
+                                       class="list-group-item list-group-item-action">
+                                        {{ $child_task->title }}
+                                        <span class="badge bg-secondary">{{ $child_task->status->name }}</span>
+                                    </a>
+                                @endforeach
+                            </div>
+                        @endif
+                    </dd>
 
                     <dt class="col-sm-3">Status:</dt>
                     <dd class="col-sm-9">{{ $task->status->name }}</dd>

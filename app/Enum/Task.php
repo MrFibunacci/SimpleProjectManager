@@ -11,6 +11,8 @@ enum Task: string
     CASE COMPLETED = 'completed';
     case STATUS_ID = 'status_id';
 
+    case PARENT_TASK_ID = 'parent_task_id';
+
     public function validationRules(): array
     {
         return match ($this) {
@@ -19,6 +21,7 @@ enum Task: string
             self::DESCRIPTION => ['nullable', 'string', 'max:255'],
             self::PROJECT_ID => ['required', 'integer', 'exists:projects,id'],
             self::STATUS_ID => ['required', 'integer', 'exists:statuses,id'],
+            self::PARENT_TASK_ID => ['nullable', 'integer', 'exists:task,id'],
         };
     }
 }

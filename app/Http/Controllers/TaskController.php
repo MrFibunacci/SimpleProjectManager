@@ -66,7 +66,11 @@ class TaskController extends Controller
      */
     public function edit(Task $task): View
     {
-        return view('task.edit', ['task' => $task, 'projects' => $task->project()->get(), 'statuses' => Status::all()]);
+        return view('task.edit', [
+            'task' => $task,
+            'projects' => $task->project()->get(),
+            'tasks' => $task->project->tasks,
+            'statuses' => Status::all()]);
     }
 
     /**

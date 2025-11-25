@@ -26,6 +26,13 @@
                                 @endforeach
                             </x-form.select>
 
+                            <x-form.select name="{{ \App\Enum\Task::PARENT_TASK_ID }}" label="Parent Task">
+                                <option value="" @if(!isset($task->parent_task))selected @endif>None</option>
+                                @foreach($tasks as $parent_task)
+                                    <option value="{{ $parent_task->id }}" @if(isset($task->parent_task) && $parent_task->id == $task->parent_task->id)selected @endif>{{ $parent_task->title }}</option>
+                                @endforeach
+                            </x-form.select>
+
                             <x-form.submit>Submit</x-form.submit>
                         </form>
                     </x-card.body>
