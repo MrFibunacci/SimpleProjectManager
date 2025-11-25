@@ -10,8 +10,6 @@
                         <form action="{{ route('task.store') }}" method="post">
                             @csrf
 
-                            @dump($errors)
-
                             <x-form.input name="{{ \App\Enum\Task::TITLE }}">Title</x-form.input>
                             <x-form.textarea name="{{ \App\Enum\Task::DESCRIPTION }}">Description</x-form.textarea>
                             <x-form.input name="{{ \App\Enum\Task::DUE_DATE }}" type="date">Due Date</x-form.input>
