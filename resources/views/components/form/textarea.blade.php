@@ -8,7 +8,7 @@
             autocomplete="@if(isset($autocomplete)) {{$autocomplete}} @else {{ $name }} @endif"
             @if(isset($autofocus)) autofocus @endif {{ $attributes }}
             rows="@if(isset($rows)) {{ $rows }} @else 3 @endif"
-        >{{ old($name) }}</textarea>
+        >@if(isset($value)){{ $value }}@else{{ old($name) }}@endif</textarea>
 
         @error($name)
         <span class="invalid-feedback" role="alert">
