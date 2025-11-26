@@ -21,7 +21,7 @@ enum Task: string
             self::DESCRIPTION => ['nullable', 'string', 'max:255'],
             self::PROJECT_ID => ['required', 'integer', 'exists:projects,id'],
             self::STATUS_ID => ['required', 'integer', 'exists:statuses,id'],
-            self::PARENT_TASK_ID => ['nullable', 'integer', 'exists:task,id'],
+            self::PARENT_TASK_ID => ['nullable', 'integer', 'exists:tasks,id'],
         };
     }
 }

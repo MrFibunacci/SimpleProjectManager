@@ -84,6 +84,13 @@ class TaskController extends Controller
 
         $task->status()->associate(Status::find($request->validated('status_id')));
 
+        $parent_task_id = $request->validated('parent_task_id');
+        if ($parent_task_id !== null) {
+            $task->parent_task()->associate($parent_task_id);
+        } else {
+            $task->parent_task()->dissociate();
+        }
+
         $task->update($request->validated());
 
         return to_route('task.show', $task)->with('success', 'Task updated successfully');
