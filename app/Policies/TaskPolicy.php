@@ -64,4 +64,9 @@ class TaskPolicy
     {
         return false;
     }
+
+    public function complete(User $user, Task $task): bool
+    {
+        return Auth::user() === $user && $user->projects->contains($task->project_id);
+    }
 }

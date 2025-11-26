@@ -103,4 +103,24 @@ class TaskController extends Controller
     {
         //
     }
+
+    /**
+     * Set the completed datetime to now and the status to "Completed"
+     */
+    public function complete(Task $task)
+    {
+        if (Auth::user()->cannot('complete', [$task])) {
+            abort(403);
+        }
+
+        if ($task->completed !== null) {
+            return to_route('task.show', $task)->with('success', 'Task is already completed');
+        }
+
+        $task->completed = now()->format('Y-m-d H:i:s');
+        $task->status()->associate(Status::where('name', 'Completed')->first());
+        $task->save();
+
+        return to_route('task.show', $task)->with('success', 'Task completed successfully');
+    }
 }
