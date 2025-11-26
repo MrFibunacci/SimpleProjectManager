@@ -25,6 +25,7 @@ Route::get('/tasks/{task}', [TaskController::class, 'show'])->name('task.show');
 Route::get('/tasks/{task}/edit', [TaskController::class, 'edit'])->name('task.edit');
 Route::post('/tasks/{task}/edit', [TaskController::class, 'update'])->name('task.update');
 Route::get('/tasks/{task}/complete', [TaskController::class, 'complete'])->name('task.complete');
+Route::delete('/tasks/{task}/delete', [TaskController::class, 'destroy'])->name('task.destroy');
 
 Route::get('/settings')->name('settings');
 

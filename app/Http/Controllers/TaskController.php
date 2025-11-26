@@ -101,7 +101,9 @@ class TaskController extends Controller
      */
     public function destroy(Task $task)
     {
-        //
+        if (Auth::user()->cannot('delete', $task)) {
+            abort(403);
+        }
     }
 
     /**
