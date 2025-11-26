@@ -37,6 +37,6 @@ class ProjectController extends Controller
 
     public function tasks(Project $project): View
     {
-        return view('project.tasks', ['project' => $project, 'tasks' => $project->tasks]);
+        return view('project.tasks', ['project' => $project, 'tasks' => $project->tasks()->orderBy('due_date')->get()]);
     }
 }
