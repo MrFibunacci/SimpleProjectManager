@@ -67,7 +67,25 @@
                 </dl>
             </div>
             <div class="col-md-5">
-                <h2>Comments and Activity</h2>
+                <div class="row">
+                    <h2>Comments and Activity</h2>
+                    <form action="#">
+                        <div class="input-group mb-3">
+                            <textarea
+                                class="form-control"
+                                rows="1"
+                                placeholder="Write a comment"
+                                aria-label="Recipient's username"
+                                aria-describedby="comment"></textarea>
+                            <button class="btn btn-primary" type="submit" id="comment"><i class="bi bi-send"></i></button>
+                        </div>
+                    </form>
+                </div>
+                <div class="row">
+                    @foreach($task->comments as $comment)
+                        <p>{{$comment->text}} from {{ $comment->user->name }}</p>
+                    @endforeach
+                </div>
             </div>
         </div>
     </div>

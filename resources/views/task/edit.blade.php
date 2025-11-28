@@ -3,7 +3,7 @@
 
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-6">
+            <div class="col-md-6">
                 <x-card>
                     <x-card.header>Create a new task</x-card.header>
                     <x-card.body>
