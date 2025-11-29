@@ -69,21 +69,50 @@
             <div class="col-md-5">
                 <div class="row">
                     <h2>Comments and Activity</h2>
-                    <form action="#">
+                    <form action="{{ route('comment.store', $task) }}" method="post">
+                        @csrf
                         <div class="input-group mb-3">
                             <textarea
                                 class="form-control"
                                 rows="1"
                                 placeholder="Write a comment"
                                 aria-label="Recipient's username"
+                                name="text"
                                 aria-describedby="comment"></textarea>
                             <button class="btn btn-primary" type="submit" id="comment"><i class="bi bi-send"></i></button>
+                            @error('text')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
                         </div>
                     </form>
                 </div>
                 <div class="row">
                     @foreach($task->comments as $comment)
-                        <p>{{$comment->text}} from {{ $comment->user->name }}</p>
+                        <div class="card ps-1 mb-1">
+                            <div class="card-body p-1">
+                                <div class="row justify-content-between">
+                                    <div class="col">
+                                        <p class="card-text">{!! nl2br($comment->text) !!}</p>
+                                    </div>
+                                    <div class="col-auto text-end">
+                                        <div class="dropdown">
+                                            <button class="btn btn-sm dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                                <i class="bi bi-three-dots"></i>
+                                            </button>
+                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                                <li><a class="dropdown-item" href="#">Edit <i class="bi bi-pencil-square"></i></a></li>
+                                                <li><a class="dropdown-item" href="#">Delete <i class="bi bi-trash"></i></a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <footer class="blockquote-footer text-end mb-1">from <b>{{ $comment->user->name }}</b> {{ $comment->created_at->ago() }}</footer>
+                                </div>
+                            </div>
+                        </div>
                     @endforeach
                 </div>
             </div>

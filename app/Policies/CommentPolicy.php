@@ -3,8 +3,10 @@
 namespace App\Policies;
 
 use App\Models\Comment;
+use App\Models\Task;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
+use Illuminate\Support\Facades\Auth;
 
 class CommentPolicy
 {
@@ -27,9 +29,9 @@ class CommentPolicy
     /**
      * Determine whether the user can create models.
      */
-    public function create(User $user): bool
+    public function create(User $user, Task $task): bool
     {
-        return false;
+        return ($user === Auth::user()) && $task->project->users->contains($user);
     }
 
     /**

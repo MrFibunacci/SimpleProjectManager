@@ -5,42 +5,29 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreCommentRequest;
 use App\Http\Requests\UpdateCommentRequest;
 use App\Models\Comment;
+use App\Models\Task;
+use Illuminate\Support\Facades\Auth;
 
 class CommentController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreCommentRequest $request)
+    public function store(StoreCommentRequest $request, Task $task)
     {
-        //
+        if (Auth::user()->cannot('create', [Comment::class, $task])) {
+            abort(403);
+        }
+
+        $comment = new Comment($request->validated());
+        $comment->task()->associate($task);
+        $comment->user()->associate(Auth::user());
+        $comment->save();
+
+        return to_route('task.show', ['task' => $task]);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Comment $comment)
-    {
-        //
-    }
-
-    /**
+        /**
      * Show the form for editing the specified resource.
      */
     public function edit(Comment $comment)

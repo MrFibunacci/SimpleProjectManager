@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\StatusController;
 use App\Http\Controllers\TaskController;
@@ -27,6 +28,7 @@ Route::get('/tasks/{task}/edit', [TaskController::class, 'edit'])->name('task.ed
 Route::post('/tasks/{task}/edit', [TaskController::class, 'update'])->name('task.update');
 Route::get('/tasks/{task}/complete', [TaskController::class, 'complete'])->name('task.complete');
 Route::delete('/tasks/{task}/delete', [TaskController::class, 'destroy'])->name('task.destroy');
+Route::post('/task/{task}/comment', [CommentController::class, 'store'])->name('comment.store');
 
 Route::get('/settings')->name('settings');
 
