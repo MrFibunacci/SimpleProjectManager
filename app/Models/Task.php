@@ -27,7 +27,7 @@ class Task extends Model
 
     public function due_date_for_form(): string
     {
-        return (new Carbon($this->due_date))->format('Y-m-d');
+        return is_null($this->due_date) ? "" : (new Carbon($this->due_date))->format('Y-m-d');
     }
 
     public function project(): BelongsTo
