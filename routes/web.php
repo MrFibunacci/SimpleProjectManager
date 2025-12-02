@@ -3,6 +3,8 @@
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\StatusController;
 use App\Http\Controllers\TaskController;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -12,7 +14,31 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::view('/dashboard', 'dashboard')->middleware('auth')->name('dashboard');
+Route::get('/dashboard', function() {
+
+    /* @var Collection $projects  */
+    $projects = Auth::user()->projects->where('status_id', '!=', \App\Models\Status::where('name', 'Completed')->first()->id);
+    $tasks = Collection::make();
+
+    foreach ($projects as $project) {
+        $tasks = $tasks->merge($project->tasks->where('completed', false));
+    }
+
+    $tasks = $tasks->sortBy(
+        fn ($task) => $task->due_date,
+    );
+
+    // move empty due_date tasks to bottom
+    foreach ($tasks as $key => $task) {
+        if (is_null($task->due_date)) {
+            $tasks->forget([$key]);
+            $tasks->push($task);
+        }
+    }
+
+    return view('dashboard', ['projects' => $projects, 'tasks' => $tasks]);
+})->middleware('auth')->name('dashboard');
+
 Route::view('/projects', 'project.index')->middleware('auth')->name('projects');
 Route::view('/project/create', 'project.create')->middleware('auth')->name('project.create');
 Route::post('/project/store', [ProjectController::class, 'store'])->name('project.store');
