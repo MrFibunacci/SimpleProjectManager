@@ -63,7 +63,13 @@
                     <dd class="col-sm-9">{{ $task->status->name }}</dd>
 
                     <dt class="col-sm-3">Description:</dt>
-                    <dd class="col-sm-9">{!! nl2br($task->description) !!}</dd>
+                    <dd class="col-sm-9">
+                        <div class="card">
+                            <div class="card-body p-2">
+                                {!! nl2br($task->description) !!}
+                            </div>
+                        </div>
+                    </dd>
                 </dl>
             </div>
             <div class="col-md-5">
