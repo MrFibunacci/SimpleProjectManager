@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Enum\Task as TaskEnum;
 use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
+use App\Models\Action;
+use App\Models\Activity;
+use App\Models\Attribute;
 use App\Models\Status;
 use App\Models\Task;
 use Illuminate\Contracts\View\Factory;
@@ -14,6 +17,11 @@ use Illuminate\Support\Facades\Auth;
 
 class TaskController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -50,6 +58,14 @@ class TaskController extends Controller
 
         $task->save();
 
+        $activity = new Activity();
+        $activity->task()->associate($task);
+        $activity->action()->associate(Action::firstWhere('name', 'create'));
+        $activity->attribute()->associate(Attribute::firstWhere('name', 'title'));
+        $activity->user()->associate(Auth::user());
+        $activity->save();
+
+
         return to_route('project.tasks', $task->project)->with('success', 'Task created successfully');
     }
 
@@ -58,7 +74,10 @@ class TaskController extends Controller
      */
     public function show(Task $task): Factory|View
     {
-        return view('task.show', ['task' => $task]);
+        $commentsAndActivities = $task->comments;
+        $commentsAndActivities = $commentsAndActivities->merge($task->activities)->sortBy(fn ($element) => $element->created_at);
+
+        return view('task.show', ['task' => $task, 'commentsAndActivities' => $commentsAndActivities]);
     }
 
     /**

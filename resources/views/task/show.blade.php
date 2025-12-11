@@ -88,8 +88,14 @@
                     </form>
                 </div>
                 <div class="row">
-                    @foreach($task->comments as $comment)
-                        <p>{{$comment->text}} from {{ $comment->user->name }}</p>
+                    @foreach($commentsAndActivities as $element)
+                        @dump($element)
+                        @if(is_a($element, \App\Models\Comment::class))
+                            <p>{{$element->text}} from {{ $element->user->name }}</p>
+                        @elseif(is_a($element, \App\Models\Activity::class))
+                            <p class="text-center mb-0">{{ $element->attribute->name }} {{ $element->action->name }} {{ $element->oldVal }} {{ $element->oldVal }} by {{ $element->user->name }}</p>
+                            <p class="text-center mb-0">Description updated from ... to ... by user</p>
+                        @endif
                     @endforeach
                 </div>
             </div>
