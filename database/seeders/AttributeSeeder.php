@@ -10,6 +10,7 @@ class AttributeSeeder extends Seeder
     public function run(): void
     {
         Attribute::factory()->createMany([
+            ['name' => 'task'],
             ['name' => 'title'],
             ['name' => 'description'],
             ['name' => 'parent_task_id'],
