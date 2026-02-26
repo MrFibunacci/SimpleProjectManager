@@ -5,8 +5,12 @@ namespace App\Http\Controllers;
 use App\Enum\Task as TaskEnum;
 use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
+use App\Models\Action;
+use App\Models\Activity;
+use App\Models\Attribute;
 use App\Models\Status;
 use App\Models\Task;
+use App\Models\User;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
@@ -14,6 +18,11 @@ use Illuminate\Support\Facades\Auth;
 
 class TaskController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -50,6 +59,14 @@ class TaskController extends Controller
 
         $task->save();
 
+        $activity = new Activity();
+        $activity->task()->associate($task);
+        $activity->action()->associate(Action::firstWhere('name', 'create'));
+        $activity->attribute()->associate(Attribute::firstWhere('name', 'title'));
+        $activity->user()->associate(Auth::user());
+        $activity->save();
+
+
         return to_route('project.tasks', $task->project)->with('success', 'Task created successfully');
     }
 
@@ -58,7 +75,10 @@ class TaskController extends Controller
      */
     public function show(Task $task): Factory|View
     {
-        return view('task.show', ['task' => $task]);
+        $commentsAndActivities = $task->comments;
+        $commentsAndActivities = $commentsAndActivities->merge($task->activities)->sortBy(fn ($element) => $element->created_at);
+
+        return view('task.show', ['task' => $task, 'commentsAndActivities' => $commentsAndActivities]);
     }
 
     /**
@@ -82,6 +102,8 @@ class TaskController extends Controller
             abort(403);
         }
 
+        $oldTask = clone $task;
+
         $task->status()->associate(Status::find($request->validated('status_id')));
 
         $parent_task_id = $request->validated('parent_task_id');
@@ -92,6 +114,8 @@ class TaskController extends Controller
         }
 
         $task->update($request->validated());
+
+        $this->saveActivity($task, $oldTask, Auth::user());
 
         return to_route('task.show', $task)->with('success', 'Task updated successfully');
     }
@@ -115,6 +139,8 @@ class TaskController extends Controller
             abort(403);
         }
 
+        $oldTask = clone $task;
+
         if ($task->completed !== null) {
             return to_route('task.show', $task)->with('success', 'Task is already completed');
         }
@@ -123,6 +149,42 @@ class TaskController extends Controller
         $task->status()->associate(Status::where('name', 'Completed')->first());
         $task->save();
 
+        $this->saveActivity($task, $oldTask, Auth::user());
+
         return to_route('task.show', $task)->with('success', 'Task completed successfully');
+    }
+
+    private function saveActivity(Task $task, Task $oldTask, User $user): void
+    {
+        foreach ($task->getChanges() as $attribute => $value) {
+            if ($attribute == 'updated_at' or $attribute == 'created_at') {
+                continue;
+            }
+
+            $activity = new Activity();
+            $activity->task()->associate($task);
+            $activity->action()->associate(Action::firstWhere('name', 'update'));
+            $activity->user()->associate($user);
+
+            $attributeModel = Attribute::where('name', $attribute)->firstOrFail();
+            switch ($attributeModel->name) {
+                case 'status_id':
+                    $activity->oldVal = Status::find($oldTask->$attribute)->name;
+                    $activity->newVal = Status::find($value)->name;
+                    break;
+                case 'parent_task_id':
+                    $activity->oldVal = $oldTask->$attribute == null ? null : Task::find($oldTask->$attribute)->title;
+                    $activity->newVal = $value == null               ? null : Task::find($value)->title;
+
+                    break;
+                default:
+                    $activity->oldVal = $oldTask->$attribute;
+                    $activity->newVal = $value;
+                    break;
+            }
+
+            $activity->attribute()->associate($attributeModel);
+            $activity->save();
+        }
     }
 }

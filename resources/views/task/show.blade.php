@@ -63,7 +63,13 @@
                     <dd class="col-sm-9">{{ $task->status->name }}</dd>
 
                     <dt class="col-sm-3">Description:</dt>
-                    <dd class="col-sm-9">{!! nl2br($task->description) !!}</dd>
+                    <dd class="col-sm-9">
+                        <div class="card">
+                            <div class="card-body p-2">
+                                {!! nl2br($task->description) !!}
+                            </div>
+                        </div>
+                    </dd>
                 </dl>
             </div>
             <div class="col-md-5">
@@ -89,30 +95,16 @@
                     </form>
                 </div>
                 <div class="row">
-                    @foreach($task->comments as $comment)
-                        <div class="card ps-1 mb-1">
-                            <div class="card-body p-1">
-                                <div class="row justify-content-between">
-                                    <div class="col">
-                                        <p class="card-text">{!! nl2br($comment->text) !!}</p>
-                                    </div>
-                                    <div class="col-auto text-end">
-                                        <div class="dropdown">
-                                            <button class="btn btn-sm dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                                <i class="bi bi-three-dots"></i>
-                                            </button>
-                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                                <li><a class="dropdown-item" href="#">Edit <i class="bi bi-pencil-square"></i></a></li>
-                                                <li><a class="dropdown-item" href="#">Delete <i class="bi bi-trash"></i></a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <footer class="blockquote-footer text-end mb-1">from <b>{{ $comment->user->name }}</b> {{ $comment->created_at->ago() }}</footer>
-                                </div>
-                            </div>
-                        </div>
+                    @foreach($commentsAndActivities as $element)
+{{--                        @dump($element)--}}
+                        @if(is_a($element, \App\Models\Comment::class))
+                            <p>{{$element->text}} from {{ $element->user->name }}</p>
+                        @elseif(is_a($element, \App\Models\Activity::class))
+                            <p class="text-center mb-0">
+                                <b>{{ $element->attribute->name }}</b> {{ $element->action->name }} from <b>{{ $element->oldVal }}</b> to <b>{{ $element->newVal }}</b> by <b>{{ $element->user->name }}</b> at {{ $element->created_at }}
+                            </p>
+{{--                            <p class="text-center mb-0">Description updated from ... to ... by user</p>--}}
+                        @endif
                     @endforeach
                 </div>
             </div>

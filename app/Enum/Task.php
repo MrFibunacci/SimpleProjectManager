@@ -18,7 +18,7 @@ enum Task: string
         return match ($this) {
             self::TITLE => ['required', 'string', 'max:64', 'min:3'],
             self::DUE_DATE, self::COMPLETED => ['nullable', 'date', 'date_format:Y-m-d', 'after_or_equal:today'],
-            self::DESCRIPTION => ['nullable', 'string', 'max:255'],
+            self::DESCRIPTION => ['nullable', 'string', 'max:16777215'],
             self::PROJECT_ID => ['required', 'integer', 'exists:projects,id'],
             self::STATUS_ID => ['required', 'integer', 'exists:statuses,id'],
             self::PARENT_TASK_ID => ['nullable', 'integer', 'exists:tasks,id'],

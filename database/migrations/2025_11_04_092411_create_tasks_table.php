@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(Project::class)->constrained();
             $table->string('title', 64);
-            $table->string('description')->nullable();
+            $table->mediumText('description')->nullable();
             $table->foreignId('parent_task_id')->nullable();
             $table->dateTime('due_date')->nullable();
             $table->dateTime('completed')->nullable();
