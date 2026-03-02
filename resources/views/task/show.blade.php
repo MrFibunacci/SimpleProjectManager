@@ -20,16 +20,16 @@
             <div class="col-md-7">
                 <dl class="row">
                     <dt class="col-sm-3">Created:</dt>
-                    <dd class="col-sm-9">{{ $task->created_at }}</dd>
+                    <dd class="col-sm-9">{{ $task->created_at }} ({{ $task->created_at->diffForHumans() }})</dd>
 
                     <dt class="col-sm-3">Last updated:</dt>
-                    <dd class="col-sm-9">{{ $task->updated_at }}</dd>
+                    <dd class="col-sm-9">{{ $task->updated_at }} ({{ $task->updated_at->diffForHumans() }})</dd>
 
                     <dt class="col-sm-3">Due Date:</dt>
-                    <dd class="col-sm-9">{{ $task->due_date }}</dd>
+                    <dd class="col-sm-9">{{ $task->due_date }} @isset($task->due_date)({{ $task->due_date->diffForHumans() }})@endisset</dd>
 
                     <dt class="col-sm-3">Completed:</dt>
-                    <dd class="col-sm-9">{{ $task->completed }}</dd>
+                    <dd class="col-sm-9">{{ $task->completed }} @isset($task->completed)({{ $task->completed->diffForHumans() }})@endisset</dd>
 
                     <dt class="col-sm-3">Parent task:</dt>
                     <dd class="col-sm-9">

@@ -25,6 +25,11 @@ class Task extends Model
         'title', 'due_date', 'completed', 'description', 'project_id'
     ];
 
+    protected $casts = [
+        'completed' => 'datetime',
+        'due_date' => 'datetime',
+    ];
+
     public function due_date_for_form(): string
     {
         return is_null($this->due_date) ? "" : (new Carbon($this->due_date))->format('Y-m-d');

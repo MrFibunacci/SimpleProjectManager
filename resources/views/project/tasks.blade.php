@@ -22,10 +22,10 @@
                     </thead>
                     <tbody>
                         @foreach($tasks as $task)
-                            <tr>
+                            <tr @if($task->due_date->isNowOrPast()) class="table-danger" @elseif($task->due_date->isTomorrow()) class="table-warning" @endif>
                                 <td>{{ $task->id }}</td>
                                 <td><a href="{{route('task.show', $task)}}">{{ $task->title }}</a></td>
-                                <td>{{ $task->due_date }}</td>
+                                <td>{{ $task->due_date->diffForHumans() }}</td>
                                 <td>{{ $task->status->name }}</td>
                                 <td>
                                     <x-actionLink.edit route="task" :param="$task"/>
