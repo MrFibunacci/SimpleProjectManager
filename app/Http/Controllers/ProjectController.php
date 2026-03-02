@@ -7,6 +7,7 @@ use App\Models\Project;
 use App\Models\Role;
 use App\Models\Status;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\Factory;
 use Illuminate\View\View;
@@ -35,8 +36,14 @@ class ProjectController extends Controller
         return view('project.show', ['project' => $project]);
     }
 
-    public function tasks(Project $project): View
+    public function tasks(Project $project, Request $request): View
     {
-        return view('project.tasks', ['project' => $project, 'tasks' => $project->tasks()->orderBy('due_date')->get()]);
+        if($request->get('show') == 'all') {
+            $tasks = $project->tasks()->orderBy('due_date')->get();
+        } else {
+            $tasks = $project->tasks()->where('completed', null)->orderBy('due_date')->get();
+        }
+
+        return view('project.tasks', ['project' => $project, 'tasks' => $tasks]);
     }
 }

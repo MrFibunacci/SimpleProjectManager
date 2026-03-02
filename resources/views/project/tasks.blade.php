@@ -3,8 +3,16 @@
 
     <div class="container">
         <x-projectHeader :project="$project">
-            <div class="col">
+            <div class="col-auto">
                 <x-newButton route="task.create" :routeParameters="['project'=>$project]" label="New Task"/>
+            </div>
+            <div class="col">
+                @if(app('request')->input('show') == 'all')
+                    <x-newButton type="btn-secondary" route="project.tasks" :routeParameters="['project'=>$project,]" label="show only active"/>
+                @else
+                    <x-newButton type="btn-secondary" route="project.tasks" :routeParameters="['project'=>$project, 'show'=>'all']" label="Show all"/>
+                @endif
+
             </div>
         </x-projectHeader>
 
