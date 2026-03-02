@@ -9,13 +9,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
 
-/**
- * @property string $title
- * @property string $due_date
- * @property string $description
- * @property int $project_id
- * @property string $completed
- */
 class Task extends Model
 {
     /** @use HasFactory<TaskFactory> */
