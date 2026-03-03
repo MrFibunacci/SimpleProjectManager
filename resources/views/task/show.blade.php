@@ -96,14 +96,17 @@
                 </div>
                 <div class="row">
                     @foreach($commentsAndActivities as $element)
-{{--                        @dump($element)--}}
                         @if(is_a($element, \App\Models\Comment::class))
-                            <p>{{$element->text}} from {{ $element->user->name }}</p>
+                            <div class="card p-1 mb-1">
+                                <div class="card-body p-1">
+                                    <b>{{ $element->user->name }}, {{ $element->created_at->diffForHumans() }}</b> <br>
+                                    {!! nl2br($element->text) !!}
+                                </div>
+                            </div>
                         @elseif(is_a($element, \App\Models\Activity::class))
                             <p class="text-center mb-0">
                                 <b>{{ $element->attribute->name }}</b> {{ $element->action->name }} from <b>{{ $element->oldVal }}</b> to <b>{{ $element->newVal }}</b> by <b>{{ $element->user->name }}</b> at {{ $element->created_at }}
                             </p>
-{{--                            <p class="text-center mb-0">Description updated from ... to ... by user</p>--}}
                         @endif
                     @endforeach
                 </div>

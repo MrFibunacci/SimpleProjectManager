@@ -75,8 +75,7 @@ class TaskController extends Controller
      */
     public function show(Task $task): Factory|View
     {
-        $commentsAndActivities = $task->comments;
-        $commentsAndActivities = $commentsAndActivities->merge($task->activities)->sortBy(fn ($element) => $element->created_at);
+        $commentsAndActivities = $task->comments->concat($task->activities)->sortBy(fn ($element) => $element->created_at);
 
         return view('task.show', ['task' => $task, 'commentsAndActivities' => $commentsAndActivities]);
     }
