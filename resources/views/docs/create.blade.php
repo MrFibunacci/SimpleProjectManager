@@ -1,27 +1,29 @@
-<x-app>
-    <x-slot:title>Project: {{ $project->name }} - Docs craete new</x-slot:title>
+<x-docs.template :project="$project" :docs="$docs">
+    <x-slot:title>Docs create new</x-slot:title>
 
-    <div class="container">
-        <x-projectHeader :project="$project">
-            <div class="col-auto">
-                <x-newButton route="docs.create" :routeParameters="['project'=>$project]" label="New doc"/>
+    <form action="{{ route('docs.store', $project) }}" method="post">
+            @csrf
+            <div class="form-floating mb-3">
+                <input id="name"
+                       type="text"
+                       class="form-control @error("name") is-invalid @enderror"
+                       name="name"
+                       value="{{ old("name") }}"
+                       required
+                       autofocus>
+                <label for="floatingInput">Name</label>
+                @error('name')
+                <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
             </div>
-        </x-projectHeader>
 
-        <div class="row pt-3">
-            <div class="col-2">
-
+            <div class="form-text mb-3">
+                <textarea class="form-control" id="content" rows="20" name="content">{{ old("content") }}</textarea>
+                @error('content')
+                <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
             </div>
+        <x-form.submit offset="0">Submit</x-form.submit>
+    </form>
 
-            <div class="col-md-10">
-                <form action="{{ route('docs.store') }}" method="post">
-                    <div class="mb-3">
-                        @csrf
-                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="20"></textarea>
-                    </div>
-                    <x-form.submit offset="0">Submit</x-form.submit>
-                </form>
-            </div>
-        </div>
-    </div>
-</x-app>
+</x-docs.template>

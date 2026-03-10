@@ -19,6 +19,10 @@ class DocController extends Controller
      */
     public function index(Project $project)
     {
+        if ($project->docs->count() > 0) {
+            return redirect()->route('docs.show', [$project, 'doc' => $project->docs->first()]);
+        }
+
         return view('docs.index', ['project' => $project, 'docs' => $project->docs]);
     }
 
@@ -27,37 +31,46 @@ class DocController extends Controller
      */
     public function create(Project $project)
     {
-        return view('docs.create', ['project' => $project]);
+        return view('docs.create', ['project' => $project, 'docs' => $project->docs]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreDocRequest $request)
+    public function store(StoreDocRequest $request, $project)
     {
-        //
+        // NOTE: for a reason unknown to me, if I use dependency injection on the method here
+        // I receive an HTML 404 error despite the resource exiting. So this is a fix for that until I
+        // figure out what went wrong
+        $project = (Project::find($project));
+
+        $data = $request->validated();
+
+        $project->docs()->save(new Doc($data));
+
+        return redirect()->route('project.docs', ['project' => $project, 'docs' => $project->docs]);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Doc $doc)
+    public function show(Project $project,Doc $doc)
     {
-        //
+        return view('docs.show', ['project' => $project, 'docs' => $project->docs, 'doc' => $doc]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Doc $doc)
+    public function edit(Project $project, Doc $doc)
     {
-        //
+        return view('docs.edit', ['project' => $project, 'docs' => $project->docs, 'doc' => $doc]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateDocRequest $request, Doc $doc)
+    public function update(UpdateDocRequest $request, Doc $doc, Project $project)
     {
         //
     }
@@ -65,7 +78,7 @@ class DocController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Doc $doc)
+    public function destroy(Doc $doc, Project $project)
     {
         //
     }
