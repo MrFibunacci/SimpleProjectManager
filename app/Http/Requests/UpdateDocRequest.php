@@ -2,7 +2,10 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Doc;
+use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class UpdateDocRequest extends FormRequest
 {
@@ -11,18 +14,24 @@ class UpdateDocRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        $project = $this->route('project');
+        $doc = $this->route('doc');
+
+        return Auth::check()
+            && $project->users()->where('user_id', Auth::id())->exists()
+            && Doc::where('project_id', $project->id)->where('id', $doc->id)->exists();
     }
 
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     * @return array<string, ValidationRule|array|string>
      */
     public function rules(): array
     {
         return [
-            //
+            'name' => 'required|string|max:255',
+            'content' => 'required|string|max:4294967295|min:1',
         ];
     }
 }

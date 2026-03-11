@@ -42,7 +42,7 @@ class DocController extends Controller
         // NOTE: for a reason unknown to me, if I use dependency injection on the method here
         // I receive an HTML 404 error despite the resource exiting. So this is a fix for that until I
         // figure out what went wrong
-        $project = (Project::find($project));
+        $project = Project::find($project);
 
         $data = $request->validated();
 
@@ -70,9 +70,15 @@ class DocController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateDocRequest $request, Doc $doc, Project $project)
+    public function update(UpdateDocRequest $request, Project $project,Doc $doc)
     {
-        //
+        $doc->update($request->validated());
+
+        return redirect()->route('docs.show', [
+            'project' => $project,
+            'docs' => $project->docs,
+            'doc' => $doc
+        ]);
     }
 
     /**
