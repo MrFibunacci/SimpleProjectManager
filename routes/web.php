@@ -52,6 +52,7 @@ route::post('/project/{project}/doc/store', [DocController::class, 'store'])->na
 route::get('/project/{project}/doc/{doc}', [DocController::class, 'show'])->name('docs.show');
 route::get('/project/{project}/doc/{doc}/edit', [DocController::class, 'edit'])->name('docs.edit');
 route::post('/project/{project}/doc/{doc}/update', [DocController::class, 'update'])->name('docs.update');
+route::delete('/project/{project}/doc/{doc}/delete', [DocController::class, 'destroy'])->name('docs.destroy');
 
 Route::get('/tasks', [TaskController::class, 'index'])->name('tasks');
 Route::get('/tasks/create', [TaskController::class, 'create'])->name('task.create');

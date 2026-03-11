@@ -5,6 +5,7 @@ namespace App\Models;
 use Database\Factories\DocFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Doc extends Model
 {
@@ -15,4 +16,9 @@ class Doc extends Model
         'name',
         'content',
     ];
+
+    public function project(): BelongsTo
+    {
+        return $this->belongsTo(Project::class);
+    }
 }

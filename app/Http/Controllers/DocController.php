@@ -6,6 +6,7 @@ use App\Http\Requests\StoreDocRequest;
 use App\Http\Requests\UpdateDocRequest;
 use App\Models\Doc;
 use App\Models\Project;
+use Illuminate\Support\Facades\Auth;
 
 class DocController extends Controller
 {
@@ -84,8 +85,12 @@ class DocController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Doc $doc, Project $project)
+    public function destroy(Project $project, Doc $doc)
     {
-        //
+        if (Auth::user()->can('delete', $doc)) {
+            $doc->delete();
+        }
+
+        return redirect()->route('project.docs', ['project' => $project, 'docs' => $project->docs]);
     }
 }

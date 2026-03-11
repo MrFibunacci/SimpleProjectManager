@@ -5,6 +5,7 @@ namespace App\Policies;
 use App\Models\Doc;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
+use Illuminate\Support\Facades\Auth;
 
 class DocPolicy
 {
@@ -45,7 +46,8 @@ class DocPolicy
      */
     public function delete(User $user, Doc $doc): bool
     {
-        return false;
+        $project = $doc->project;
+        return Auth::check() && $project->users()->where('user_id', $user->id)->exists();
     }
 
     /**
