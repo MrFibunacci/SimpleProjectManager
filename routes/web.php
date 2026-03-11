@@ -1,10 +1,10 @@
 <?php
 
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\DocController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\StatusController;
 use App\Http\Controllers\TaskController;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -45,6 +45,14 @@ Route::view('/project/create', 'project.create')->middleware('auth')->name('proj
 Route::post('/project/store', [ProjectController::class, 'store'])->name('project.store');
 Route::get('/project/{project}', [ProjectController::class, 'show'])->name('project.show');
 Route::get('/project/{project}/tasks', [ProjectController::class, 'tasks'])->name('project.tasks');
+
+route::get('/project/{project}/docs', [DocController::class, 'index'])->name('project.docs');
+route::get('/project/{project}/doc/create', [DocController::class, 'create'])->name('docs.create');
+route::post('/project/{project}/doc/store', [DocController::class, 'store'])->name('docs.store');
+route::get('/project/{project}/doc/{doc}', [DocController::class, 'show'])->name('docs.show');
+route::get('/project/{project}/doc/{doc}/edit', [DocController::class, 'edit'])->name('docs.edit');
+route::post('/project/{project}/doc/{doc}/update', [DocController::class, 'update'])->name('docs.update');
+route::delete('/project/{project}/doc/{doc}/delete', [DocController::class, 'destroy'])->name('docs.destroy');
 
 Route::get('/tasks', [TaskController::class, 'index'])->name('tasks');
 Route::get('/tasks/create', [TaskController::class, 'create'])->name('task.create');
