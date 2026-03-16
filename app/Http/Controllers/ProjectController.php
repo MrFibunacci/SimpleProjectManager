@@ -46,4 +46,9 @@ class ProjectController extends Controller
 
         return view('project.tasks', ['project' => $project, 'tasks' => $tasks]);
     }
+
+    public function settings(Project $project)
+    {
+        return view('project.settings', ['project' => $project]);
+    }
 }

@@ -54,6 +54,8 @@ route::get('/project/{project}/doc/{doc}/edit', [DocController::class, 'edit'])-
 route::post('/project/{project}/doc/{doc}/update', [DocController::class, 'update'])->name('docs.update');
 route::delete('/project/{project}/doc/{doc}/delete', [DocController::class, 'destroy'])->name('docs.destroy');
 
+route::get('/project/{project}/settings', [ProjectController::class, 'settings'])->name('project.settings');
+
 Route::get('/tasks', [TaskController::class, 'index'])->name('tasks');
 Route::get('/tasks/create', [TaskController::class, 'create'])->name('task.create');
 Route::post('/tasks/store', [TaskController::class, 'store'])->name('task.store');

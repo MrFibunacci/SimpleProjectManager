@@ -9,7 +9,7 @@
             <a type="button" class="btn btn-primary" href="{{ route('project.show', $project) }}">overview</a>
             <a type="button" class="btn btn-primary" href="{{ route('project.tasks', $project) }}">tasks</a>
             <a type="button" class="btn btn-primary" href="{{ route('project.docs', $project) }}">docs</a>
-            <a type="button" class="btn btn-primary disabled">settings</a>
+            <a type="button" class="btn btn-primary disabled" href="{{ route('project.settings', $project) }}">settings</a>
         </div>
     </div>
 
