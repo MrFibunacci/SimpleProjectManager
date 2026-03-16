@@ -32,11 +32,13 @@
                         @foreach($tasks as $task)
                             <tr
                                 @isset($task->due_date)
-                                    @if($task->due_date->isNowOrPast())
-                                        class="table-danger"
-                                    @elseif($task->due_date->isTomorrow())
-                                        class="table-warning"
-                                    @endif
+                                    @if($task->completed == null)
+                                        @if($task->due_date->isNowOrPast())
+                                            class="table-danger"
+                                        @elseif($task->due_date->isTomorrow())
+                                            class="table-warning"
+                                        @endif
+                                   @endif
                                 @endisset>
                                 <td>{{ $task->id }}</td>
                                 <td><a href="{{route('task.show', $task)}}">{{ $task->title }}</a></td>
